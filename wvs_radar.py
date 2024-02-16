@@ -56,7 +56,7 @@ app.layout = html.Div([
                     ],
                     value=all_classes
                 )], style={'margin-top':'12px'})], style={'display':'inline-block', 'margin-right':'10px'}) for i in range(2)],], style={'display': 'flex', "width":'45%'}),
-            html.Div(dcc.Graph(id='spider-chart'), style={'width':'100%'})], id='container', style={'display':'flex', 'flex-direction':'row'})]
+            html.Div(dcc.Graph(id='spider-chart'), style={'width':'100%'})], id='container', style={'display':'flex', 'flex-direction':'row'}), style={'margin-top': '10px'}]
 )
 
 
