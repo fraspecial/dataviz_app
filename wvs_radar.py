@@ -20,6 +20,7 @@ sub=pd.read_csv(dwn_url, index_col=0)
 
 app = dash.Dash(__name__)
 
+
 all_countries=list(sub['B_COUNTRY_ALPHA'].unique())
 all_classes=list(sub['Q287P'].unique())
 app.layout = html.Div([
