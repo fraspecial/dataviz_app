@@ -19,7 +19,7 @@ dwn_url='https://drive.google.com/uc?id=' + file_id
 sub=pd.read_csv(dwn_url, index_col=0)
 sub[sub['Q287P']<0, 'Q287P']=0
 
-app = dash.Dash(__name__)
+app = dash.Dash(__name__, external_stylesheets=['/assets/styles.css'])
 server=app.server
 
 all_countries=list(sub['B_COUNTRY_ALPHA'].unique())
