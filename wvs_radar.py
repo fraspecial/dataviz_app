@@ -55,7 +55,7 @@ app.layout = html.Div([
                 {'label': 'Unknown', 'value': 0}
                 ],
                 value=all_classes
-            )], style={'margin-top':'15px'})], style={'display': 'inline-block','width':'25%', 'height':'15%', 'margin':'20px'}) for i in range(2)],
+            )], style={'margin-top':'15px'})], style={'display': 'inline-block','width':'10%', 'margin':'20px'}) for i in range(2)],
         dcc.Graph(id='spider-chart')]
 )
 
