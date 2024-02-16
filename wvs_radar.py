@@ -26,7 +26,7 @@ all_countries=list(sub['B_COUNTRY_ALPHA'].unique())
 all_classes=list(sub['Q287P'].unique())
 app.layout = html.Div([
     html.H1("What are the most important values in each country?"),
-    *[html.Div(children=[
+    html.Div([*[html.Div(children=[
         html.Div([
             html.Label(f'Country {i+1}',className='label'),
             dcc.Dropdown(
@@ -55,8 +55,8 @@ app.layout = html.Div([
                 {'label': 'Unknown', 'value': 0}
                 ],
                 value=all_classes
-            )], style={'margin-top':'15px'})], style={'display': 'inline-block','width':'15%', 'margin':'20px'}) for i in range(2)],
-        dcc.Graph(id='spider-chart')]
+            )], style={'margin-top':'15px'})], style={'display': 'inline-block'}) for i in range(2)]], style={'display': 'inline-block', 'text-align':'top', 'width':'30%'}),
+        html.Div(dcc.Graph(id='spider-chart'), style={'display': 'inline-block'})]
 )
 
 
