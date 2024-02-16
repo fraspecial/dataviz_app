@@ -26,37 +26,37 @@ all_countries=list(sub['B_COUNTRY_ALPHA'].unique())
 all_classes=list(sub['Q287P'].unique())
 app.layout = html.Div([
     html.H1("What are the most important values in each country?"),
-    html.Div([*[html.Div(children=[
-        html.Div([
-            html.Label(f'Country {i+1}',className='label'),
-            dcc.Dropdown(
-            id={'type':'dropdown', 'index':i},
-            options=all_countries,
-            value=all_countries[i],
-            multi=False,
-            clearable=False
-        )]),
-
-        html.Div([
-            html.Label('Select social class', className='label'),
-            dcc.Checklist(
-                id={'type':'all-checklist', 'index':i},
-                options=[{'label': 'All', 'value':'All'}],
-                value=['All'],
-            ),            
-            dcc.Checklist(
-                id={'type':'checklist', 'index':i},
-                options=[
-                {'label': 'Upper class', 'value': 1},
-                {'label': 'Upper middle class', 'value': 2},
-                {'label': 'Lower middle class', 'value': 3},
-                {'label': 'Working class', 'value': 4},
-                {'label': 'Lower class', 'value': 5},
-                {'label': 'Unknown', 'value': 0}
-                ],
-                value=all_classes
-            )], style={'margin-top':'15px'})], style={'display': 'inline-block'}) for i in range(2)]], style={'display': 'inline-block', 'text-align':'top', 'width':'30%'}),
-        html.Div(dcc.Graph(id='spider-chart'), style={'display': 'inline-block'})]
+    html.Div(
+        [html.Div([*[html.Div(children=[
+            html.Div([
+                html.Label(f'Country {i+1}',className='label'),
+                dcc.Dropdown(
+                id={'type':'dropdown', 'index':i},
+                options=all_countries,
+                value=all_countries[i],
+                multi=False,
+                clearable=False
+            )]),
+            html.Div([
+                html.Label('Select social class', className='label'),
+                dcc.Checklist(
+                    id={'type':'all-checklist', 'index':i},
+                    options=[{'label': 'All', 'value':'All'}],
+                    value=['All'],
+                ),            
+                dcc.Checklist(
+                    id={'type':'checklist', 'index':i},
+                    options=[
+                    {'label': 'Upper class', 'value': 1},
+                    {'label': 'Upper middle class', 'value': 2},
+                    {'label': 'Lower middle class', 'value': 3},
+                    {'label': 'Working class', 'value': 4},
+                    {'label': 'Lower class', 'value': 5},
+                    {'label': 'Unknown', 'value': 0}
+                    ],
+                    value=all_classes
+                )], style={'margin-top':'12px'})], style={'display':'inline-block', 'margin-right':'10px'}) for i in range(2)],], style={'display': 'flex', "width":'45%'}),
+            html.Div(dcc.Graph(id='spider-chart'), style={'width':'100%'})], id='container', style={'display':'flex', 'flex-direction':'row'})]
 )
 
 
@@ -112,6 +112,8 @@ def update_chart(countries, areas):
 
     # Set layout parameters
     fig.update_layout(
+        autosize=False,
+        margin=dict(l=10,r=10,t=10,b=10),
         polar=dict(radialaxis=dict(visible=True, range=[0,5])),
         showlegend=True,
     )
