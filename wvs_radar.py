@@ -17,6 +17,7 @@ url='"https://drive.google.com/file/d/1--sLuI8kkkTF9uYdEHO23VjM8D0C-_sC/view?usp
 file_id=url.split('/')[-2]
 dwn_url='https://drive.google.com/uc?id=' + file_id
 sub=pd.read_csv(dwn_url, index_col=0)
+sub[sub['Q287P']<0, 'Q287P']=0
 
 app = dash.Dash(__name__)
 server=app.server
@@ -24,20 +25,25 @@ server=app.server
 all_countries=list(sub['B_COUNTRY_ALPHA'].unique())
 all_classes=list(sub['Q287P'].unique())
 app.layout = html.Div([
-    html.H1("Survey Results Comparison"),
+    html.H1("What are the most important values in each country?"),
     *[html.Div(children=[
         html.Div([
-            html.Label('Dropdown 1'),
+            html.Label(f'Country{i+1}'),
             dcc.Dropdown(
             id={'type':'dropdown', 'index':i},
-            options=["All"]+all_countries,
+            options=all_countries,
             value=[all_countries[i]],
             multi=False,
-        )], style={'display': 'inline-block', 'margin-right': '20px'}),
+        )]),
 
         html.Div([
-            html.Label('Dropdown 2'),
-            dcc.Dropdown(
+            html.Label('Select social class'),
+            dcc.Checklist(
+                id={'type':'all-checklist', 'index':i},
+                options=[{'label': 'All', 'value':'All'}],
+                value=['All']
+            ),            
+            dcc.Checklist(
                 id={'type':'checklist', 'index':i},
                 options=[
                 {'label': 'Upper class', 'value': 1},
@@ -45,15 +51,10 @@ app.layout = html.Div([
                 {'label': 'Lower middle class', 'value': 3},
                 {'label': 'Working class', 'value': 4},
                 {'label': 'Lower class', 'value': 5},
-                {'label': "Don't know", 'value': -1},
-                {'label': "No answer", 'value': -.2},
-                {'label': 'Not asked', 'value': -4},
-                {'label': 'No answer; Missing', 'value': -5}
+                {'label': 'Unknown', 'value': 0}
                 ],
-                multi=True,
-                value=all_classes,
-            #value=['check1'],
-                )], style={'display': 'inline-block', 'margin-right': '20px'})]) for i in range(2)],
+                value=all_classes
+            )])], style={'display': 'inline-block','width':'40%', 'margin':'20px'}) for i in range(2)],
         dcc.Graph(id='spider-chart')]
 )
 
@@ -65,14 +66,14 @@ app.layout = html.Div([
     Input({'type':"all-checklist", 'index':MATCH}, "value"),
     prevent_initial_call=True
     )
-def sync_checklists(cities_selected, all_selected):
+def sync_checklists(classes_selected, all_selected):
     input_type = ctx.triggered_id.type
 
     if input_type=="checklist":
-        all_selected = ["All"] if set(cities_selected) == set(all_classes) else []
+        all_selected = ["All"] if set(classes_selected) == set(all_classes) else []
     else:
-        cities_selected = all_classes if all_selected else []
-    return cities_selected, all_selected
+        classes_selected = all_classes if all_selected else []
+    return classes_selected, all_selected
 
 
 # Define callback to update spider chart based on user input
@@ -82,7 +83,6 @@ def sync_checklists(cities_selected, all_selected):
     Input({'type':'checklist', 'index':ALL}, 'value')]
 )
 def update_chart(countries, areas):
-    #print(ctx.triggered_id)
     r_list=aggregate_info(sub, all_countries, all_classes, ["Q1P", "Q2P", "Q3P", "Q4P", "Q5P","Q6P"])
     r_list=np.append(r_list,r_list.iloc[0])
     fig=go.Figure(go.Scatterpolar(
@@ -92,8 +92,6 @@ def update_chart(countries, areas):
             fill = 'toself',
             name="All")
       )
-    if ["All"] == countries[0]:
-        countries[0]=all_countries
     for i in range(2):
         if not isinstance(countries[i],list):
             countries[i]=[countries[i]]
@@ -118,42 +116,6 @@ def update_chart(countries, areas):
     )
 
     return fig
-
-# Run the app
-if __name__ == '__main__':
-    app.run_server(debug=True)
-
-# Create a Dash web application
-app = dash.Dash(__name__)
-
-# Define the layout of the app
-app.layout = html.Div(children=[
-    html.Div([
-        html.Label('Dropdown 1'),
-        dcc.Dropdown(
-            id='dropdown1',
-            options=[
-                {'label': 'Option 1', 'value': 'opt1'},
-                {'label': 'Option 2', 'value': 'opt2'},
-                {'label': 'Option 3', 'value': 'opt3'}
-            ],
-            value='opt1'
-        ),
-    ], style={'display': 'inline-block', 'margin-right': '20px'}),
-
-    html.Div([
-        html.Label('Dropdown 2'),
-        dcc.Dropdown(
-            id='dropdown2',
-            options=[
-                {'label': 'Option A', 'value': 'optA'},
-                {'label': 'Option B', 'value': 'optB'},
-                {'label': 'Option C', 'value': 'optC'}
-            ],
-            value='optA'
-        ),
-    ], style={'display': 'inline-block'}),
-])
 
 # Run the app
 if __name__ == '__main__':
