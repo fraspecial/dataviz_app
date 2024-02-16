@@ -28,20 +28,21 @@ app.layout = html.Div([
     html.H1("What are the most important values in each country?"),
     *[html.Div(children=[
         html.Div([
-            html.Label(f'Country{i+1}'),
+            html.Label(f'Country {i+1}',className='label'),
             dcc.Dropdown(
             id={'type':'dropdown', 'index':i},
             options=all_countries,
-            value=[all_countries[i]],
+            value=all_countries[i],
             multi=False,
+            clearable=False
         )]),
 
         html.Div([
-            html.Label('Select social class'),
+            html.Label('Select social class', className='label'),
             dcc.Checklist(
                 id={'type':'all-checklist', 'index':i},
                 options=[{'label': 'All', 'value':'All'}],
-                value=['All']
+                value=['All'],
             ),            
             dcc.Checklist(
                 id={'type':'checklist', 'index':i},
@@ -54,7 +55,7 @@ app.layout = html.Div([
                 {'label': 'Unknown', 'value': 0}
                 ],
                 value=all_classes
-            )])], style={'display': 'inline-block','width':'40%', 'margin':'20px'}) for i in range(2)],
+            )], style={'margin-top':'15px'})], style={'display': 'inline-block','width':'40%', 'margin':'20px'}) for i in range(2)],
         dcc.Graph(id='spider-chart')]
 )
 
@@ -80,7 +81,7 @@ def sync_checklists(classes_selected, all_selected):
 @app.callback(
     Output('spider-chart', 'figure'),
     [Input({'type':'dropdown', 'index':ALL}, 'value'),
-    Input({'type':'checklist', 'index':ALL}, 'value')]
+    Input({'type':'checklist', 'index':ALL}, 'value')],
 )
 def update_chart(countries, areas):
     r_list=aggregate_info(sub, all_countries, all_classes, ["Q1P", "Q2P", "Q3P", "Q4P", "Q5P","Q6P"])
