@@ -13,11 +13,10 @@ def aggregate_info(sub, countries, classes, features):
 
 pd.DataFrame.iteritems=pd.DataFrame.items
 
-data=pd.read_csv("WVS_Cross-National_Inverted_Wave_7_csv_v5_0.csv")
-
-sub=data[['Q1P', 'Q2P','Q3P', 'Q4P', 'Q5P', 'Q6P', 'B_COUNTRY_ALPHA', 'Q287P', 'W_WEIGHT', 'S018', 'E1_LITERACY']].copy()
-sub.to_csv("sub_wvs.csv")
-sub['Q287P']=pd.Categorical(sub['Q287P'])
+url='"https://drive.google.com/file/d/1--sLuI8kkkTF9uYdEHO23VjM8D0C-_sC/view?usp=drive_link'
+file_id=url.split('/')[-2]
+dwn_url='https://drive.google.com/uc?id=' + file_id
+sub=pd.read_csv(dwn_url, index_col=0)
 
 app = dash.Dash(__name__)
 
