@@ -24,6 +24,7 @@ server=app.server
 
 all_countries=list(sub['B_COUNTRY_ALPHA'].unique())
 all_classes=list(sub['Q287P'].unique())
+app = dash.Dash(__name__, external_stylesheets=['/assets/styles.css'])
 app.layout = html.Div([
     html.H1("What's important in life?"),
     html.P(['How much family, friends, work, politics, leisure time and religion matter from 1 ("Not at all important") to 4 ("Very important) for people all over the world?', html.Br(), 'Surprisingly ', html.B('it\'s not all about work at all!')]),
@@ -33,10 +34,10 @@ app.layout = html.Div([
                 html.Label(f'Country {i+1}',className='label'),
                 dcc.Dropdown(
                 id={'type':'dropdown', 'index':i},
-                options=["All"]+all_countries,
+                className='dropdown',
+                options=['All']+all_countries,
                 value=all_countries[i],
-                multi=False,
-                clearable=False
+                multi=True,
             )]),
             html.Div([
                 html.Label('Select social class', className='label'),
@@ -57,7 +58,7 @@ app.layout = html.Div([
                     ],
                     value=all_classes
                 )], style={'margin-top':'12px'})], style={'display':'inline-block', 'margin-right':'10px'}) for i in range(2)],], style={'display': 'flex', "width":'45%'}),
-            html.Div(dcc.Graph(id='spider-chart'), style={'width':'100%'})], id='container', style={'display':'flex', 'flex-direction':'row', 'margin-top': '25px'})]
+            html.Div(dcc.Graph(id='spider-chart'), style={'width':'100%'})], id='container', style={'display':'flex', 'flex-direction':'row','margin-top':'25px'})]
 )
 
 
@@ -92,14 +93,16 @@ def update_chart(countries, areas):
             theta=["Family", "Friends", "Leisure time", "Work", "Politics", "Religion", "Family"],
             mode='text',
             fill = 'toself',
+            hoveron='points',
+            hovertemplate='%{theta}: %{r}<extra></extra>',
             name="All")
       )
-    if ["All"] == countries[0]:
-        countries[0]=all_countries
     
     for i in range(2):
         if not isinstance(countries[i],list):
             countries[i]=[countries[i]]
+        if "All" in countries[i]:
+            countries[i]=all_countries
         r_list=aggregate_info(sub, countries[i], areas[i], ["Q1P", "Q2P", "Q3P", "Q4P", "Q5P","Q6P"])
         r_list=np.append(r_list,r_list.iloc[0])
     # Create spider chart with multiple traces for each country using Plotly Express
@@ -111,6 +114,7 @@ def update_chart(countries, areas):
             theta=["Family", "Friends", "Leisure time", "Work", "Politics", "Religion", "Family"],
             mode='lines',
             fill = "none",
+            hovertemplate='%{theta}: %{r} <extra></extra>',
             name="All" if len(countries[i])==len(all_countries) else ' '.join(countries[i])
         ))
 
@@ -118,7 +122,7 @@ def update_chart(countries, areas):
     fig.update_layout(
         autosize=False,
         margin=dict(l=10,r=10,t=10,b=10),
-        polar=dict(radialaxis=dict(visible=True, range=[0,5])),
+        polar=dict(radialaxis=dict(visible=True, range=[0,4])),
         showlegend=True,
     )
 
