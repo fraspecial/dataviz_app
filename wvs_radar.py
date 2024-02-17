@@ -17,8 +17,7 @@ url='"https://drive.google.com/file/d/1--sLuI8kkkTF9uYdEHO23VjM8D0C-_sC/view?usp
 file_id=url.split('/')[-2]
 dwn_url='https://drive.google.com/uc?id=' + file_id
 sub=pd.read_csv(dwn_url, index_col=0)
-sub.loc[sub['Q287P']<0, 'Q287P']=0
-
+sub=sub.sort_values('B_COUNTRY_ALPHA')
 app = dash.Dash(__name__, external_stylesheets=['/assets/styles.css'])
 server=app.server
 
@@ -31,7 +30,7 @@ app.layout = html.Div([
     html.Div(
         [html.Div([*[html.Div(children=[
             html.Div([
-                html.Label(f'Country {i+1}',className='label'),
+                html.Label(f'Group {i+1}',className='label'),
                 dcc.Dropdown(
                 id={'type':'dropdown', 'index':i},
                 className='dropdown',
@@ -58,7 +57,7 @@ app.layout = html.Div([
                     {'label': 'Unknown', 'value': 0}
                     ],
                     value=all_classes
-                )], style={'margin-top':'12px'})], style={'display':'inline-block', 'margin-right':'10px'}) for i in range(2)],], style={'display': 'flex', "width":'45%'}),
+                )], style={'margin-top':'12px'})], style={'display':'inline-block', 'width':'40%','margin-right':'20px'}) for i in range(2)],], style={'display': 'flex', "width":'50%'}),
             html.Div(dcc.Graph(id='spider-chart'), style={'width':'100%'})], id='container', style={'display':'flex', 'flex-direction':'row','margin-top':'25px'})]
 )
 
@@ -116,7 +115,7 @@ def update_chart(countries, areas):
             mode='lines',
             fill = "none",
             hovertemplate='%{theta}: %{r} <extra></extra>',
-            name="All" if len(countries[i])==len(all_countries) else ' '.join(countries[i])
+            name="All" if len(countries[i])==len(all_countries) else f'Group {i+1}'
         ))
 
     # Set layout parameters
@@ -128,6 +127,10 @@ def update_chart(countries, areas):
     )
 
     return fig
+
+# Run the app
+if __name__ == '__main__':
+    app.run_server(debug=True)
 
 # Run the app
 if __name__ == '__main__':
