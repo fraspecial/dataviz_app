@@ -34,7 +34,7 @@ app.layout = html.Div([
                 dcc.Dropdown(
                 id={'type':'dropdown', 'index':i},
                 options=["All"]+all_countries,
-                value=all_countries[i+1],
+                value=all_countries[i],
                 multi=False,
                 clearable=False
             )]),
