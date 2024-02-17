@@ -28,7 +28,7 @@ app = dash.Dash(__name__, external_stylesheets=['/assets/styles.css'])
 server=app.server
 app.layout = html.Div([
     html.H1("What's important in life?"),
-    html.P(['How much family, friends, work, politics, leisure time and religion matter from 1 ("Not at all important") to 4 ("Very important) for people all over the world?', html.Br(), 'Surprisingly ', html.B('it\'s not all about work at all!')]),
+    html.P(['How much family, friends, work, politics, leisure time and religion matter from 0 ("Not at all important") to 3 ("Very important) for people all over the world?', html.Br(), 'Surprisingly ', html.B('it\'s not all about work at all!')]),
     html.Div(
         [html.Div([*[html.Div(children=[
             html.Div([
@@ -91,7 +91,7 @@ def update_chart(countries, areas):
     r_list=aggregate_info(sub, all_countries, all_classes, ["Q1P", "Q2P", "Q3P", "Q4P", "Q5P","Q6P"])
     r_list=np.append(r_list,r_list.iloc[0])
     fig=go.Figure(go.Scatterpolar(
-            r=r_list,
+            r=r_list - 1,
             theta=["Family", "Friends", "Leisure time", "Work", "Politics", "Religion", "Family"],
             mode='text',
             fill = 'toself',
@@ -112,7 +112,7 @@ def update_chart(countries, areas):
     #fig = go.Figure(go.Scatterpolar(r=starting_r_list, theta=theta_list, mode='text', name='mean', fill='toself'))
 
         fig.add_trace(go.Scatterpolar(
-            r=r_list,
+            r=r_list - 1,
             theta=["Family", "Friends", "Leisure time", "Work", "Politics", "Religion", "Family"],
             mode='lines',
             fill = "none",
@@ -124,7 +124,7 @@ def update_chart(countries, areas):
     fig.update_layout(
         autosize=False,
         margin=dict(l=10,r=10,t=10,b=10),
-        polar=dict(radialaxis=dict(visible=True, range=[0,4])),
+        polar=dict(radialaxis=dict(visible=True, range=[0,3])),
         showlegend=True,
     )
 
