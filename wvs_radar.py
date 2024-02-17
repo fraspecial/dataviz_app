@@ -17,7 +17,9 @@ url='"https://drive.google.com/file/d/1--sLuI8kkkTF9uYdEHO23VjM8D0C-_sC/view?usp
 file_id=url.split('/')[-2]
 dwn_url='https://drive.google.com/uc?id=' + file_id
 sub=pd.read_csv(dwn_url, index_col=0)
+sub.loc[sub['Q287P']<0, 'Q287P']=0
 sub=sub.sort_values('B_COUNTRY_ALPHA')
+
 
 
 all_countries=list(sub['B_COUNTRY_ALPHA'].unique())
