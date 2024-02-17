@@ -32,7 +32,7 @@ app.layout = html.Div([
                 html.Label(f'Country {i+1}',className='label'),
                 dcc.Dropdown(
                 id={'type':'dropdown', 'index':i},
-                options=all_countries,
+                options=["All"]+all_countries,
                 value=all_countries[i],
                 multi=False,
                 clearable=False
@@ -93,6 +93,9 @@ def update_chart(countries, areas):
             fill = 'toself',
             name="All")
       )
+    if ["All"] == countries[0]:
+    countries[0]=all_countries
+    
     for i in range(2):
         if not isinstance(countries[i],list):
             countries[i]=[countries[i]]
