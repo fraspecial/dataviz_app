@@ -37,7 +37,7 @@ app.layout = html.Div([
                 className='dropdown',
                 options=['All']+all_countries,
                 value=all_countries[i],
-                multi=True,
+                multi=True
             )]),
             html.Div([
                 html.Label('Select social class', className='label'),
