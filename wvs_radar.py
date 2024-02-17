@@ -133,7 +133,3 @@ def update_chart(countries, areas):
 # Run the app
 if __name__ == '__main__':
     app.run_server(debug=True)
-
-# Run the app
-if __name__ == '__main__':
-    app.run_server(debug=True)
