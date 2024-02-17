@@ -18,12 +18,12 @@ file_id=url.split('/')[-2]
 dwn_url='https://drive.google.com/uc?id=' + file_id
 sub=pd.read_csv(dwn_url, index_col=0)
 sub=sub.sort_values('B_COUNTRY_ALPHA')
-app = dash.Dash(__name__, external_stylesheets=['/assets/styles.css'])
-server=app.server
+
 
 all_countries=list(sub['B_COUNTRY_ALPHA'].unique())
 all_classes=list(sub['Q287P'].unique())
 app = dash.Dash(__name__, external_stylesheets=['/assets/styles.css'])
+server=app.server
 app.layout = html.Div([
     html.H1("What's important in life?"),
     html.P(['How much family, friends, work, politics, leisure time and religion matter from 1 ("Not at all important") to 4 ("Very important) for people all over the world?', html.Br(), 'Surprisingly ', html.B('it\'s not all about work at all!')]),
@@ -114,7 +114,7 @@ def update_chart(countries, areas):
             theta=["Family", "Friends", "Leisure time", "Work", "Politics", "Religion", "Family"],
             mode='lines',
             fill = "none",
-            hovertemplate='%{theta}: %{r} <extra></extra>',
+            hovertemplate='%{theta}: %{r}<extra></extra>',
             name="All" if len(countries[i])==len(all_countries) else f'Group {i+1}'
         ))
 
