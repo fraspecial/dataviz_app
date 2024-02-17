@@ -33,7 +33,7 @@ app.layout = html.Div([
                 dcc.Dropdown(
                 id={'type':'dropdown', 'index':i},
                 options=["All"]+all_countries,
-                value=all_countries[i],
+                value=all_countries[i+1],
                 multi=False,
                 clearable=False
             )]),
@@ -94,7 +94,7 @@ def update_chart(countries, areas):
             name="All")
       )
     if ["All"] == countries[0]:
-    countries[0]=all_countries
+        countries[0]=all_countries
     
     for i in range(2):
         if not isinstance(countries[i],list):
