@@ -95,11 +95,13 @@ def update_chart(countries, areas):
             theta=["Family", "Friends", "Leisure time", "Work", "Politics", "Religion", "Family"],
             mode='text',
             fill = 'toself',
+            fillcolor='rgba(0,204,150,0.5)',
             hoveron='points',
             hovertemplate='%{theta}: %{r}<extra></extra>',
             name="All")
       )
     
+    colors=['red', 'blue']
     for i in range(2):
         if not isinstance(countries[i],list):
             countries[i]=[countries[i]]
@@ -116,6 +118,7 @@ def update_chart(countries, areas):
             theta=["Family", "Friends", "Leisure time", "Work", "Politics", "Religion", "Family"],
             mode='lines',
             fill = "none",
+            line={'color': colors[i]},
             hovertemplate='%{theta}: %{r}<extra></extra>',
             name="All" if len(countries[i])==len(all_countries) else f'Group {i+1}'
         ))
