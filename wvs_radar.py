@@ -120,7 +120,7 @@ def update_chart(countries, areas):
             fill = "none",
             line={'color': colors[i]},
             hovertemplate='%{theta}: %{r}<extra></extra>',
-            name="All" if len(countries[i])==len(all_countries) else f'Group {i+1}'
+            name=f'Group {i+1}'
         ))
 
     # Set layout parameters
