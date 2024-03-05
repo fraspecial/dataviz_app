@@ -61,8 +61,10 @@ app.layout = html.Div([
                     ],
                     value=all_classes
                 )], style={'margin-top':'12px'})], style={'display':'inline-block', 'width':'40%','margin-right':'20px'}) for i in range(2)],], style={'display': 'flex', "width":'50%'}),
-            html.Div(dcc.Graph(id='spider-chart'), style={'width':'100%'})], id='container', style={'display':'flex', 'flex-direction':'row','margin-top':'25px'})]
-)
+            html.Div(dcc.Graph(id='spider-chart'), style={'width':'100%'})], id='container', style={'display':'flex', 'flex-direction':'row','margin-top':'25px'}),
+            html.P('Source:', style={'display':'inline'}),dcc.Link("World Value Survey Wave 7", href="https://www.worldvaluessurvey.org/WVSDocumentationWV7.jsp", style={'display':'inline', 'color':'#ff2252'})],
+            style={'font-family':'Figtree'},
+            )
 
 
 @callback(
