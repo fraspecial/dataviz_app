@@ -6,9 +6,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
-    font-size: 15px;
-     /* Change 'Roboto' to your desired font */
-}
+    font-size: 15px;}
 
 .dropdown *{
     font-size: 13px;
@@ -17,4 +15,5 @@ body {
 
 .label{
     font-weight: 500;
+    font-family: 'Roboto', sans-serif;
 }
