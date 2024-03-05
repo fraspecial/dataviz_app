@@ -4,16 +4,16 @@
 
 /* Apply the custom font to the body */
 body {
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Figtree', sans-serif;
     font-weight: 300;
     font-size: 15px;}
 
 .dropdown *{
     font-size: 13px;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Figtree', sans-serif;
 }
 
 .label{
     font-weight: 500;
-    font-family: 'Roboto', sans-serif;
+    font-family: 'Figtree', sans-serif;
 }
