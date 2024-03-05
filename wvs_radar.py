@@ -17,6 +17,7 @@ url='"https://drive.google.com/file/d/1--sLuI8kkkTF9uYdEHO23VjM8D0C-_sC/view?usp
 file_id=url.split('/')[-2]
 dwn_url='https://drive.google.com/uc?id=' + file_id
 sub=pd.read_csv(dwn_url, index_col=0)
+sub[['Q1P', 'Q2P', 'Q3P', 'Q4P', 'Q5P', 'Q6P']]=sub[['Q1P', 'Q2P', 'Q3P', 'Q4P', 'Q5P', 'Q6P']]-1
 sub.loc[sub['Q287P']<0, 'Q287P']=0
 sub=sub.sort_values('B_COUNTRY_ALPHA')
 
@@ -91,7 +92,7 @@ def update_chart(countries, areas):
     r_list=aggregate_info(sub, all_countries, all_classes, ["Q1P", "Q2P", "Q3P", "Q4P", "Q5P","Q6P"])
     r_list=np.append(r_list,r_list.iloc[0])
     fig=go.Figure(go.Scatterpolar(
-            r=r_list - 1,
+            r=r_list,
             theta=["Family", "Friends", "Leisure time", "Work", "Politics", "Religion", "Family"],
             mode='text',
             fill = 'toself',
@@ -114,7 +115,7 @@ def update_chart(countries, areas):
     #fig = go.Figure(go.Scatterpolar(r=starting_r_list, theta=theta_list, mode='text', name='mean', fill='toself'))
 
         fig.add_trace(go.Scatterpolar(
-            r=r_list - 1,
+            r=r_list,
             theta=["Family", "Friends", "Leisure time", "Work", "Politics", "Religion", "Family"],
             mode='lines',
             fill = "none",
