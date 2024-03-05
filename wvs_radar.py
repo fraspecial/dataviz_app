@@ -127,7 +127,7 @@ def update_chart(countries, areas):
     # Set layout parameters
     fig.update_layout(
         autosize=False,
-        font=dict(family='Roboto', size=13.5),
+        font=dict(family='Figtree', size=13.5),
         margin=dict(l=10,r=10,t=10,b=10),
         polar=dict(radialaxis=dict(visible=True, range=[0,3])),
         showlegend=True,
