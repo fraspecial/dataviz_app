@@ -62,7 +62,7 @@ app.layout = html.Div([
                     value=all_classes
                 )], style={'margin-top':'12px'})], style={'display':'inline-block', 'width':'40%','margin-right':'20px'}) for i in range(2)],], style={'display': 'flex', "width":'50%'}),
             html.Div(dcc.Graph(id='spider-chart'), style={'width':'100%'})], id='container', style={'display':'flex', 'flex-direction':'row','margin-top':'25px'}),
-            html.Div([html.P('Source: ', style={'display':'flex', 'font-size': '10px', 'color':'#9e9e9e'}),dcc.Link("World Value Survey Wave 7", href="https://www.worldvaluessurvey.org/WVSDocumentationWV7.jsp", style={'display': 'flex', 'color':'#e19899', 'font-size': '10px'})])],
+            html.P('Source: ', style={'display':'inline', 'font-size': '10px', 'color':'#9e9e9e'}),html.a("World Value Survey Wave 7", href="https://www.worldvaluessurvey.org/WVSDocumentationWV7.jsp", style={'display': 'inline', 'color':'#e19899', 'font-size': '10px'})],
             style={'font-family':'Figtree'},
             )
 
@@ -131,7 +131,7 @@ def update_chart(countries, areas):
         autosize=False,
         font=dict(family='Figtree', size=14),
         margin=dict(l=10,r=10,t=10,b=10),
-        polar=dict(radialaxis=dict(visible=True, range=[0,3], gridcolor='grey')),
+        polar=dict(radialaxis=dict(visible=True, range=[0,3], gridcolor='grey'), angularaxis=dict(gridcolor='grey')),
         showlegend=True,
         plot_bgcolor='white',
         
