@@ -131,9 +131,8 @@ def update_chart(countries, areas):
         autosize=False,
         font=dict(family='Figtree', size=14),
         margin=dict(l=10,r=10,t=10,b=10),
-        polar=dict(radialaxis=dict(visible=True, range=[0,3], gridcolor='grey'), angularaxis=dict(gridcolor='grey')),
+        polar=dict(radialaxis=dict(visible=True, range=[0,3], gridcolor='grey'), angularaxis=dict(gridcolor='grey'), bgcolor='white'),
         showlegend=True,
-        bgcolor='white',
         
     )
 
