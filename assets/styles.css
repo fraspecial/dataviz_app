@@ -4,16 +4,13 @@
 
 /* Apply the custom font to the body */
 body {
-    font-family: 'Figtree', sans-serif;
     font-weight: 300;
     }
 
 .dropdown *{
     font-size: 13px;
-    font-family: 'Figtree', sans-serif;
 }
 
 .label{
     font-weight: 500;
-    font-family: 'Figtree', sans-serif;
 }
